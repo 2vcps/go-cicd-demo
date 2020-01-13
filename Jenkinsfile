@@ -32,7 +32,7 @@ spec:
         git 'https://github.com/2vcps/go-cicd-demo.git'
         container(name: 'kaniko') {
             sh '''
-            /kaniko/executor --dockerfile --skip-tls-verify `pwd`/gowebapp/Dockerfile --context `pwd`/gowebapp --destination=harbor.newstack.local/jowings/gowebapp:latest --destination=harbor.newstack.local/jowings/gowebapp:v$BUILD_NUMBER
+            /kaniko/executor --dockerfile --skip-tls-verify `pwd`/gowebapp/Dockerfile --context `pwd`/gowebapp --destination=harbor.newstack.local/jowings/gowebapp:canary
             '''
       }
     }
@@ -44,7 +44,7 @@ spec:
         git 'https://github.com/2vcps/go-cicd-demo.git'
         container(name: 'kaniko') {
             sh '''
-            /kaniko/executor --single-snapshot --skip-tls-verify --dockerfile `pwd`/gowebapp-mysql/Dockerfile --context `pwd`/gowebapp-mysql --destination=harbor.newstack.local/jowings/gowebapp-mysql:latest --destination=harbor.newstack.local/jowings/gowebapp-mysql:v$BUILD_NUMBER
+            /kaniko/executor --single-snapshot --skip-tls-verify --dockerfile `pwd`/gowebapp-mysql/Dockerfile --context `pwd`/gowebapp-mysql --destination=harbor.newstack.local/jowings/gowebapp-mysql:canary
             '''
       }
     }
