@@ -29,6 +29,7 @@ spec:
 """
 }
   }
+  
   stages {
     stage('Build and push image with Container Builder') {
       steps {
@@ -41,6 +42,7 @@ spec:
             '''
       }
     }
+      }
     stage('Deploy Canary') {
       // Canary branch
       when { branch 'canary' }
