@@ -15,7 +15,7 @@ spec:
     - /busybox/cat
     tty: true
     volumeMounts:
-      - name: docker-config
+      - name: harbor-config
         mountPath: /kaniko/.docker
   volumes:
     - name: harbor-config
