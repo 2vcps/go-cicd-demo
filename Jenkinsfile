@@ -21,11 +21,6 @@ spec:
     - name: docker-config
       configMap:
         name: docker-config
-  - name: kubectl
-    image: gcr.io/cloud-builders/kubectl
-    command:
-    - cat
-    tty: true
 """
 }
   }
