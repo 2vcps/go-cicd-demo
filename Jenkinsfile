@@ -26,7 +26,7 @@ spec:
   }
 
   stages {
-    stage('Build and push image with Container Builder') {
+    stage('Build and push webapp image with Container Builder') {
       steps {
         container('kaniko') {
         git 'https://github.com/2vcps/go-cicd-demo.git'
@@ -34,6 +34,17 @@ spec:
             sh ('ls `pwd`')
             sh '''
             /kaniko/executor --dockerfile `pwd`/gowebapp/Dockerfile --context `pwd`/gowebapp --destination=jowings/gowebapp:latest --destination=jowings/gowebapp:v$BUILD_NUMBER
+            '''
+      }
+    }
+      }
+    steps {
+        container('kaniko') {
+        git 'https://github.com/2vcps/go-cicd-demo.git'
+        container(name: 'kaniko') {
+            sh ('ls `pwd`')
+            sh '''
+            /kaniko/executor --dockerfile `pwd`/gowebapp-mysql/Dockerfile --context `pwd`/gowebapp-mysql --destination=jowings/gowebapp-mysql:latest --destination=jowings/gowebapp-mysql:v$BUILD_NUMBER
             '''
       }
     }
