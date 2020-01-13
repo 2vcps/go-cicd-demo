@@ -31,9 +31,9 @@ spec:
         container('kaniko') {
         git 'https://github.com/2vcps/go-cicd-demo.git'
         container(name: 'kaniko') {
+            sh ('ls `pwd`')
             sh '''
             /kaniko/executor --dockerfile `pwd`/gowebapp/Dockerfile --context `pwd` --destination=jowings/gowebapp:latest --destination=jowings/gowebapp:v$BUILD_NUMBER
-            /kaniko/executor --dockerfile `pwd`/gowebapp-mysql/Dockerfile --context `pwd` --destination=jowings/gowebapp-mysql:latest --destination=jowings/gowebapp-sql:v$BUILD_NUMBER
             '''
       }
     }
