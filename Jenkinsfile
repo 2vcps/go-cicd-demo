@@ -1,7 +1,7 @@
 pipeline {
   agent {
     kubernetes {
-      label 'go-cicd-demo'
+      label 'go-cicd-demo2'
       yaml """
 kind: Pod
 metadata:
@@ -14,8 +14,11 @@ spec:
     command:
     - /busybox/cat
     tty: true
+    env:
+    - name: DOCKER_CONFIG
+      value: /kaniko/.docker/
     volumeMounts:
-      - name: docker-config
+      - name: harbor-config
         mountPath: /kaniko/.docker
   volumes:
     - name: harbor-config
@@ -32,7 +35,11 @@ spec:
         git 'https://github.com/2vcps/go-cicd-demo.git'
         container(name: 'kaniko') {
             sh '''
+<<<<<<< HEAD
             /kaniko/executor --dockerfile --skip-tls-verify `pwd`/gowebapp/Dockerfile --context `pwd`/gowebapp --destination=harbor.newstack.local/jowings/gowebapp:canary
+=======
+            /kaniko/executor --skip-tls-verify --dockerfile `pwd`/gowebapp/Dockerfile --context `pwd`/gowebapp --destination=harbor.newstack.local/jowings/gowebapp:latest --destination=harbor.newstack.local/jowings/gowebapp:v$BUILD_NUMBER
+>>>>>>> 11a86b3c127086bb342819e3f143f2b8aa7c7596
             '''
       }
     }
