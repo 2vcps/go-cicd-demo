@@ -1,19 +1,7 @@
 pipeline {
-
-  environment {
-    PROJECT = "REPLACE_WITH_YOUR_PROJECT_ID"
-    APP_NAME = "gceme"
-    FE_SVC_NAME = "${APP_NAME}-frontend"
-    CLUSTER = "jenkins-cd"
-    CLUSTER_ZONE = "us-east1-d"
-    IMAGE_TAG = "gcr.io/${PROJECT}/${APP_NAME}:${env.BRANCH_NAME}.${env.BUILD_NUMBER}"
-    JENKINS_CRED = "${PROJECT}"
-  }
-
   agent {
     kubernetes {
-      label 'sample-app'
-      defaultContainer 'jnlp'
+      label 'go-cicd-demo'
       yaml """
 kind: Pod
 metadata:
@@ -45,10 +33,11 @@ spec:
     stage('Build and push image with Container Builder') {
       steps {
         container('kaniko') {
-        git 'https://github.com/2vcps/goapp.git'
+        git 'https://github.com/2vcps/go-cicd-demo.git'
         container(name: 'kaniko') {
             sh '''
-            /kaniko/executor --dockerfile `pwd`/Dockerfile --context `pwd` --destination=jowings/gowebapp:latest --destination=jowings/gowebapp:v$BUILD_NUMBER
+            /kaniko/executor --dockerfile `pwd`/gowebapp/Dockerfile --context `pwd` --destination=jowings/gowebapp:latest --destination=jowings/gowebapp:v$BUILD_NUMBER
+            /kaniko/executor --dockerfile `pwd`/gowebapp-mysql/Dockerfile --context `pwd` --destination=jowings/gowebapp-mysql:latest --destination=jowings/gowebapp-sql:v$BUILD_NUMBER
             '''
       }
     }
