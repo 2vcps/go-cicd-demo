@@ -29,8 +29,8 @@ spec:
   }
 
   stages {
-    when { branch 'canary'}
     stage('Build and push webapp image with Container Builder') {
+      when { branch 'canary'}
       steps {
         container('kaniko') {
         git 'https://github.com/2vcps/go-cicd-demo.git'
@@ -43,6 +43,7 @@ spec:
       }
     }
     stage('Build and push webapp sql image with Container Builder') {
+      when { branch 'canary'}
       steps {
         container('kaniko') {
         git 'https://github.com/2vcps/go-cicd-demo.git'
