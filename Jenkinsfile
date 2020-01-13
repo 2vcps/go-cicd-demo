@@ -29,13 +29,14 @@ spec:
   }
 
   stages {
+    when { branch 'canary'}
     stage('Build and push webapp image with Container Builder') {
       steps {
         container('kaniko') {
         git 'https://github.com/2vcps/go-cicd-demo.git'
         container(name: 'kaniko') {
             sh '''
-            /kaniko/executor --dockerfile --skip-tls-verify `pwd`/gowebapp/Dockerfile --context `pwd`/gowebapp --destination=harbor.newstack.local/jowings/gowebapp:canary
+            /kaniko/executor --skip-tls-verify --dockerfile `pwd`/gowebapp/Dockerfile --context `pwd`/gowebapp --destination=harbor.newstack.local/jowings/gowebapp:canary
             '''
       }
     }
