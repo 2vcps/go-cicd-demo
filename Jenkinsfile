@@ -29,8 +29,9 @@ spec:
 """
 }
   }
+
   stages {
-    steps('Build and push image with Container Builder') {
+    stage('Build and push image with Container Builder') {
       steps {
         container('kaniko') {
         git 'https://github.com/2vcps/go-cicd-demo.git'
