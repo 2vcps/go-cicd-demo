@@ -30,7 +30,7 @@ spec:
 }
   }
   stages {
-    stage('Build and push image with Container Builder') {
+    steps('Build and push image with Container Builder') {
       steps {
         container('kaniko') {
         git 'https://github.com/2vcps/go-cicd-demo.git'
@@ -42,7 +42,7 @@ spec:
       }
     }
       }
-    stage('Deploy Canary') {
+    steps('Deploy Canary') {
       // Canary branch
       when { branch 'canary' }
       steps {
@@ -56,10 +56,10 @@ spec:
         }
       }
     }
-    stage('Deploy Production') {
+    steps('Deploy Production') {
       // Production branch
       when { branch 'master' }
-      steps{
+      step{
         container('kubectl') {
             sh('kubectl get pod')
         // Change deployed image in canary to the one we just built
@@ -70,13 +70,13 @@ spec:
         }
       }
     }
-    stage('Deploy Dev') {
+    steps('Deploy Dev') {
       // Developer Branches
       when {
         not { branch 'master' }
         not { branch 'canary' }
       }
-      steps {
+      step {
         container('kubectl') {
             sh('kubectl get pod')
           // Create namespace if it doesn't exist
