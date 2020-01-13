@@ -1,6 +1,5 @@
 pipeline {
-  agent {
-    kubernetes {
+  podTemplate( {
       label 'go-cicd-demo'
       yaml """
 kind: Pod
@@ -23,7 +22,6 @@ spec:
         name: harbor-config
 """
 }
-  }
 
   stages {
     stage('Build and push webapp image with Container Builder') {
