@@ -18,9 +18,9 @@ spec:
       - name: docker-config
         mountPath: /kaniko/.docker
   volumes:
-    - name: docker-config
+    - name: harbor-config
       configMap:
-        name: docker-config
+        name: harbor-config
 """
 }
   }
@@ -32,7 +32,7 @@ spec:
         git 'https://github.com/2vcps/go-cicd-demo.git'
         container(name: 'kaniko') {
             sh '''
-            /kaniko/executor --dockerfile `pwd`/gowebapp/Dockerfile --context `pwd`/gowebapp --destination=jowings/gowebapp:latest --destination=jowings/gowebapp:v$BUILD_NUMBER
+            /kaniko/executor --dockerfile `pwd`/gowebapp/Dockerfile --context `pwd`/gowebapp --destination=harbor.newstack.local/jowings/gowebapp:latest --destination=harbor.newstack.local/jowings/gowebapp:v$BUILD_NUMBER
             '''
       }
     }
@@ -44,7 +44,7 @@ spec:
         git 'https://github.com/2vcps/go-cicd-demo.git'
         container(name: 'kaniko') {
             sh '''
-            /kaniko/executor --single-snapshot --dockerfile `pwd`/gowebapp-mysql/Dockerfile --context `pwd`/gowebapp-mysql --destination=jowings/gowebapp-mysql:latest --destination=jowings/gowebapp-mysql:v$BUILD_NUMBER
+            /kaniko/executor --single-snapshot --dockerfile `pwd`/gowebapp-mysql/Dockerfile --context `pwd`/gowebapp-mysql --destination=harbor.newstack.local/jowings/gowebapp-mysql:latest --destination=harbor.newstack.local/jowings/gowebapp-mysql:v$BUILD_NUMBER
             '''
       }
     }
