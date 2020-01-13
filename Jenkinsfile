@@ -1,7 +1,7 @@
 pipeline {
   agent {
     kubernetes {
-      label 'go-cicd-demo'
+      label 'go-cicd-demo2'
       yaml """
 kind: Pod
 metadata:
@@ -100,5 +100,4 @@ spec:
   //     }
   //   }
    }
-  }
   }
