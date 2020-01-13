@@ -33,7 +33,7 @@ spec:
         container(name: 'kaniko') {
             sh ('ls `pwd`')
             sh '''
-            /kaniko/executor --dockerfile `pwd`/gowebapp/Dockerfile --context `pwd` --destination=jowings/gowebapp:latest --destination=jowings/gowebapp:v$BUILD_NUMBER
+            /kaniko/executor --dockerfile `pwd`/gowebapp/Dockerfile --context `pwd`/gowebapp --destination=jowings/gowebapp:latest --destination=jowings/gowebapp:v$BUILD_NUMBER
             '''
       }
     }
