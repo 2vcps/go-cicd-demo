@@ -86,13 +86,13 @@ spec:
     //     }
     //   }
     // }
-    steps('Deploy Dev') {
+    stage('Deploy Dev') {
       // Developer Branches
       when {
         not { branch 'master' }
         not { branch 'canary' }
       }
-      step {
+      steps {
         container('kubectl') {
             sh('kubectl get pod')
           // Create namespace if it doesn't exist
