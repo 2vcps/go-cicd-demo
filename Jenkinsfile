@@ -7,6 +7,7 @@ kind: Pod
 metadata:
   name: kaniko
 spec:
+  serviceAccountName: jenkins
   containers:
   - name: kubectl
     image: gcr.io/cloud-builders/kubectl
