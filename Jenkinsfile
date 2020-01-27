@@ -60,9 +60,9 @@ spec:
     stage('Deploy with kubectl') {
       steps{
       container('kubectl') {
-        sh "kubectl get ns ${JOB_NAME} || kubectl create ns ${JOB_NAME}"
-        sh "kubectl -n ${JOB_NAME} apply -f deployment.yaml"
-        sh "kubectl -n ${JOB_NAME} get pod"
+        sh "kubectl get ns ${JOB_BASE_NAME} || kubectl create ns ${JOB_BASE_NAME}"
+        sh "kubectl -n ${JOB_BASE_NAME} apply -f deployment.yaml"
+        sh "kubectl -n ${JOB_BASE_NAME} get pod"
       }
       }
     }
