@@ -89,17 +89,17 @@ node(POD_LABEL) {
     //     }
     //   }
     // }
-    stage('Deploy Dev') {
-      // Developer Branches
-      when {
-        not { branch 'master' }
-        not { branch 'canary' }
-      }
-      steps {
-        container('kubectl') {
-            sh("kubectl get ns ${env.BRANCH_NAME} || kubectl create ns ${env.BRANCH_NAME}")
-            sh("kubectl -n ${env.BRANCH_NAME} get pod")
-            sh("sed -i.bak 's#gcr.io/cloud-solutions-images/gceme:1.0.0#${IMAGE_TAG}#' ./k8s/dev/*.yaml")
+    // stage('Deploy Dev') {
+    //   // Developer Branches
+    //   when {
+    //     not { branch 'master' }
+    //     not { branch 'canary' }
+    //   }
+    //   steps {
+    //     container('kubectl') {
+    //         sh("kubectl get ns ${env.BRANCH_NAME} || kubectl create ns ${env.BRANCH_NAME}")
+    //         sh("kubectl -n ${env.BRANCH_NAME} get pod")
+    //         sh("sed -i.bak 's#gcr.io/cloud-solutions-images/gceme:1.0.0#${IMAGE_TAG}#' ./k8s/dev/*.yaml")
           // Create namespace if it doesn't exist
         //   sh("kubectl get ns ${env.BRANCH_NAME} || kubectl create ns ${env.BRANCH_NAME}")
         //   // Don't use public load balancing for development branches
