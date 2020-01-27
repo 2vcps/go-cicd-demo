@@ -31,7 +31,6 @@ node(POD_LABEL) {
   def myRepo = checkout scm
   def gitCommit = myRepo.GIT_COMMIT
   def gitBranch = myRepo.GIT_BRANCH
-  stages {
     stage('Build and push webapp image with Container Builder') {
       steps {
         container('kaniko') {
@@ -115,5 +114,4 @@ node(POD_LABEL) {
   //     }
   //   }
    }
-  }
 }
