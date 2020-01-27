@@ -1,4 +1,4 @@
-podTemplate(yaml: """"
+podTemplate(yaml: """
 kind: Pod
 serviceAccountName: jenkins-k8s
 spec:
