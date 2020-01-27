@@ -4,10 +4,14 @@ pipeline {
       label 'go-cicd-demo2'
       yaml """
 kind: Pod
-metadata:
-  name: kaniko
+serviceAccountName: jenkins-k8s
 spec:
   containers:
+  - name: kubectl
+    image: gcr.io/cloud-builders/kubectl
+    command:
+    - cat
+    tty: true
   - name: kaniko
     image: gcr.io/kaniko-project/executor:debug-539ddefcae3fd6b411a95982a830d987f4214251
     imagePullPolicy: Always
@@ -51,6 +55,13 @@ spec:
             '''
       }
     }
+      }
+    }
+    stage('Deploy with kubectl') {
+      container('kubectl') {
+        sh "kubectl get ns ${JOB_NAME} || kubectl create ns ${JOB_NAME}"
+        sh "kubectl -n ${JOB_NAME} apply -f deployment.yaml"
+        sh "kubectl -n ${JOB_NAME} get pod"
       }
     }
     // steps('Deploy Canary') {
