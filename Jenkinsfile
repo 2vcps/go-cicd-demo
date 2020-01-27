@@ -53,7 +53,7 @@ spec:
         git 'https://github.com/2vcps/go-cicd-demo.git'
         container(name: 'kaniko') {
             sh '''
-            /kaniko/executor --single-snapshot --skip-tls-verify --dockerfile `pwd`/gowebapp-mysql/Dockerfile --context `pwd`/gowebapp-mysql --destination=harbor.newstack.local/jowings/gowebapp-mysql:dev
+            /kaniko/executor --single-snapshot --skip-tls-verify --dockerfile `pwd`/gowebapp-mysql/Dockerfile --context `pwd`/gowebapp-mysql --destination=harbor.newstack.local/jowings/gowebapp-mysql-dev:${BUILD_NUMBER}
             '''
       }
     }
@@ -95,7 +95,9 @@ spec:
       }
       steps {
         container('kubectl') {
-            sh('kubectl get pod')
+            sh("kubectl get ns ${env.BRANCH_NAME} || kubectl create ns ${env.BRANCH_NAME}")
+            sh("kubectl -n ${env.BRANCH_NAME} get pod")
+            sh("sed -i.bak 's#gcr.io/cloud-solutions-images/gceme:1.0.0#${IMAGE_TAG}#' ./k8s/dev/*.yaml")
           // Create namespace if it doesn't exist
         //   sh("kubectl get ns ${env.BRANCH_NAME} || kubectl create ns ${env.BRANCH_NAME}")
         //   // Don't use public load balancing for development branches
