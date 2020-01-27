@@ -54,7 +54,8 @@ node(POD_LABEL) {
     }
     stage('Deploy with kubectl') {
       container('kubectl') {
-        sh "kubectl get ns go-demo-${BRANCH_NAME} || kubectl create ns ns go-demo-${BRANCH_NAME}"
+        sh "kubectl get pod -A"
+        sh "kubectl get ns go-demo-${BRANCH_NAME} || kubectl create ns go-demo-${BRANCH_NAME}"
         sh "kubectl -n ns go-demo-${BRANCH_NAME} apply -f deployment.yaml"
         sh "kubectl -n ns go-demo-${BRANCH_NAME} get pod"
       }
