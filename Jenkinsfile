@@ -1,8 +1,4 @@
-pipeline {
-  agent {
-    kubernetes {
-      label 'go-cicd-demo2'
-      yaml """
+podTemplate(yaml: """"
 kind: Pod
 serviceAccountName: jenkins-k8s
 spec:
@@ -29,9 +25,10 @@ spec:
       configMap:
         name: harbor-config
 """
-}
-  }
-
+node(POD_LABEL) {
+  def myRepo = checkout scm
+  def gitCommit = myRepo.GIT_COMMIT
+  def gitBranch = myRepo.GIT_BRANCH
   stages {
     stage('Build and push webapp image with Container Builder') {
       steps {
