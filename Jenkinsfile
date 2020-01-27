@@ -1,7 +1,7 @@
 podTemplate(yaml: """
 kind: Pod
 spec:
-serviceAccountName: jenkins-k8s
+  serviceAccountName: jenkins-k8s
   containers:
   - name: kubectl
     image: gcr.io/cloud-builders/kubectl
