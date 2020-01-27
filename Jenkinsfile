@@ -56,8 +56,8 @@ node(POD_LABEL) {
       container('kubectl') {
         sh "kubectl get pod -A"
         sh "kubectl get ns go-demo-${BRANCH_NAME} || kubectl create ns go-demo-${BRANCH_NAME}"
-        sh "kubectl -n ns go-demo-${BRANCH_NAME} apply -f deployment.yaml"
-        sh "kubectl -n ns go-demo-${BRANCH_NAME} get pod"
+        sh "kubectl -n go-demo-${BRANCH_NAME} apply -f deployment.yaml"
+        sh "kubectl -n go-demo-${BRANCH_NAME} get pod"
       }
       
     }
