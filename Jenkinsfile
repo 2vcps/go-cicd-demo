@@ -111,5 +111,3 @@ node(POD_LABEL) {
         //   echo "Then access your service via http://localhost:8001/api/v1/proxy/namespaces/${env.BRANCH_NAME}/services/${FE_SVC_NAME}:80/"
         }
       }
-    }
-   }
