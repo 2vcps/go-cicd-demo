@@ -25,6 +25,8 @@ spec:
       configMap:
         name: harbor-config
 """
+) {
+
 node(POD_LABEL) {
   def myRepo = checkout scm
   def gitCommit = myRepo.GIT_COMMIT
@@ -114,3 +116,4 @@ node(POD_LABEL) {
   //   }
    }
   }
+}
