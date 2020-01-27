@@ -32,7 +32,6 @@ node(POD_LABEL) {
   def gitCommit = myRepo.GIT_COMMIT
   def gitBranch = myRepo.GIT_BRANCH
     stage('Build and push webapp image with Container Builder') {
-      steps {
         container('kaniko') {
         git 'https://github.com/2vcps/go-cicd-demo.git'
         container(name: 'kaniko') {
@@ -42,9 +41,7 @@ node(POD_LABEL) {
       }
     }
       }
-    }
     stage('Build and push webapp sql image with Container Builder') {
-      steps {
         container('kaniko') {
         git 'https://github.com/2vcps/go-cicd-demo.git'
         container(name: 'kaniko') {
@@ -53,16 +50,15 @@ node(POD_LABEL) {
             '''
       }
     }
-      }
+      
     }
     stage('Deploy with kubectl') {
-      steps{
       container('kubectl') {
         sh "kubectl get ns go-demo-${BRANCH_NAME} || kubectl create ns ns go-demo-${BRANCH_NAME}"
         sh "kubectl -n ns go-demo-${BRANCH_NAME} apply -f deployment.yaml"
         sh "kubectl -n ns go-demo-${BRANCH_NAME} get pod"
       }
-      }
+      
     }
     // steps('Deploy Canary') {
     //   // Canary branch
